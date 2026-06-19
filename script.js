@@ -7,13 +7,14 @@
  * - 任务完成 / 取消完成切换
  * - 删除任务
  * - 总任务数和已完成数统计
- *
- * 待实现：
- * - localStorage 持久化
+ * - localStorage 本地保存
  */
 
 (function () {
     "use strict";
+
+    // 存储 key
+    var STORAGE_KEY = "dailyTodoTasks";
 
     // DOM 元素
     var taskInput = document.getElementById("taskInput");
@@ -22,8 +23,31 @@
     var totalCountEl = document.getElementById("totalCount");
     var doneCountEl = document.getElementById("doneCount");
 
-    // 状态
-    var tasks = [];
+    // 状态：从 localStorage 加载
+    var tasks = loadTasks();
+
+    /**
+     * 从 localStorage 加载任务列表
+     * 如果数据异常则返回空数组，避免页面报错
+     */
+    function loadTasks() {
+        try {
+            var data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                return JSON.parse(data);
+            }
+        } catch (e) {
+            // JSON 解析失败，忽略
+        }
+        return [];
+    }
+
+    /**
+     * 保存任务列表到 localStorage
+     */
+    function saveTasks() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
 
     /**
      * 渲染任务列表到页面
@@ -40,23 +64,19 @@
                 li.classList.add("task-done");
             }
 
-            // 任务文本
             var span = document.createElement("span");
             span.className = "task-text";
             span.textContent = task.text;
 
-            // 删除按钮
             var delBtn = document.createElement("button");
             delBtn.className = "btn-delete";
             delBtn.textContent = "删除";
 
-            // 删除按钮阻止冒泡，避免触发完成切换
             delBtn.addEventListener("click", createDeleteHandler(task.id));
 
             li.appendChild(span);
             li.appendChild(delBtn);
 
-            // li 点击切换完成状态
             li.addEventListener("click", createToggleHandler(task.id));
 
             taskList.appendChild(li);
@@ -74,6 +94,7 @@
                     break;
                 }
             }
+            saveTasks();
             renderTasks();
             updateStats();
         };
@@ -81,17 +102,16 @@
 
     /**
      * 创建删除处理函数
-     * 使用 stopPropagation 防止触发 li 的完成切换
      */
     function createDeleteHandler(taskId) {
         return function (event) {
             event.stopPropagation();
 
-            // 过滤掉要删除的任务
             tasks = tasks.filter(function (task) {
                 return task.id !== taskId;
             });
 
+            saveTasks();
             renderTasks();
             updateStats();
         };
@@ -129,10 +149,15 @@
         };
         tasks.push(task);
 
+        saveTasks();
         renderTasks();
         updateStats();
         taskInput.value = "";
     }
+
+    // 页面初始化：渲染已有任务
+    renderTasks();
+    updateStats();
 
     // 绑定事件
     btnAdd.addEventListener("click", addTask);

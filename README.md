@@ -1,5 +1,7 @@
 # Daily Todo
 
+> 🌐 **在线访问**：[https://a0912279821-spec.github.io/daily-todo/](https://a0912279821-spec.github.io/daily-todo/)
+
 一个使用原生 HTML、CSS、JavaScript 制作的每日任务清单，用于练习前端基础、DOM 操作、数组对象、CRUD 和 localStorage。
 
 ## 已完成的 MVP 功能
@@ -21,7 +23,8 @@
 
 ## 使用方法
 
-下载或克隆仓库后，直接用浏览器打开 `index.html` 即可。
+- 直接访问在线地址：[https://a0912279821-spec.github.io/daily-todo/](https://a0912279821-spec.github.io/daily-todo/)
+- 或克隆仓库后用浏览器打开 `index.html`
 
 ```sh
 git clone https://github.com/a0912279821-spec/daily-todo.git
@@ -30,6 +33,6 @@ git clone https://github.com/a0912279821-spec/daily-todo.git
 ## 当前项目状态
 
 - 核心 MVP 功能已完成
-- 暂未部署 GitHub Pages
+- 已部署 GitHub Pages
 - 暂未添加筛选功能
 - 暂未添加清空全部功能

@@ -1,18 +1,35 @@
 # Daily Todo
 
-一个简单的每日任务清单，适合大一计算机学生练习前端开发。
+一个使用原生 HTML、CSS、JavaScript 制作的每日任务清单，用于练习前端基础、DOM 操作、数组对象、CRUD 和 localStorage。
+
+## 已完成的 MVP 功能
+
+- 添加任务（点击按钮或回车）
+- 显示任务列表
+- 完成 / 取消完成任务（点击任务切换）
+- 删除任务（点击删除按钮）
+- 总任务数量统计
+- 已完成任务数量统计
+- localStorage 本地保存（刷新后数据保留）
+- 刷新页面后完成状态保持不变
 
 ## 技术栈
 
 - 原生 HTML、CSS、JavaScript
-- 不使用 React、Vue、Vite、Tailwind 等框架
+- localStorage
+- 不使用 React、Vue、Vite、Tailwind、Bootstrap 等框架
 
-## 当前状态
+## 使用方法
 
-- 项目结构已初始化
-- 页面包含任务输入框、添加按钮、任务列表区域、统计区域
-- 任务管理逻辑待实现
+下载或克隆仓库后，直接用浏览器打开 `index.html` 即可。
 
-## 如何打开
+```sh
+git clone https://github.com/a0912279821-spec/daily-todo.git
+```
 
-直接用浏览器打开 `index.html` 即可。
+## 当前项目状态
+
+- 核心 MVP 功能已完成
+- 暂未部署 GitHub Pages
+- 暂未添加筛选功能
+- 暂未添加清空全部功能

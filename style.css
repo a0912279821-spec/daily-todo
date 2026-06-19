@@ -125,8 +125,18 @@ header p {
     word-break: break-word;
 }
 
+.task-item {
+    cursor: pointer;
+}
+
 .task-item:last-child {
     margin-bottom: 0;
+}
+
+.task-item.task-done {
+    text-decoration: line-through;
+    color: var(--muted);
+    background: var(--surface);
 }
 
 .todo-stats {

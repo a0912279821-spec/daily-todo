@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一个简单的每日任务清单">
+    <title>Daily Todo</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <h1>Daily Todo</h1>
+            <p>一个简单的每日任务清单</p>
+        </header>
+
+        <main>
+            <div class="todo-card">
+                <div class="todo-input-area">
+                    <input
+                        type="text"
+                        id="taskInput"
+                        class="task-input"
+                        placeholder="输入新任务..."
+                        maxlength="100"
+                    >
+                    <button class="btn btn-add" id="btnAdd">添加任务</button>
+                </div>
+
+                <ul class="task-list" id="taskList">
+                    <!-- 任务项将在这里动态生成 -->
+                </ul>
+
+                <div class="todo-stats">
+                    <p>总任务 <span id="totalCount">0</span>，已完成 <span id="doneCount">0</span></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Built by Jerry</p>
+        </footer>
+    </div>
+</body>
+</html>

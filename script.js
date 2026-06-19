@@ -4,10 +4,10 @@
  * 已实现：
  * - 添加任务
  * - 任务列表渲染
- * - 总任务数统计
+ * - 任务完成 / 取消完成切换
+ * - 总任务数和已完成数统计
  *
  * 待实现：
- * - 标记完成 / 取消完成
  * - 删除任务
  * - localStorage 持久化
  */
@@ -32,14 +32,43 @@
         // 清空列表
         taskList.innerHTML = "";
 
-        // 遍历 tasks 数组，为每项创建 li
         for (var i = 0; i < tasks.length; i++) {
             var task = tasks[i];
             var li = document.createElement("li");
             li.className = "task-item";
+
+            // 已完成任务添加样式
+            if (task.done) {
+                li.classList.add("task-done");
+            }
+
             li.textContent = task.text;
+
+            // 绑定点击事件：切换完成状态
+            li.addEventListener("click", createToggleHandler(task.id));
+
             taskList.appendChild(li);
         }
+    }
+
+    /**
+     * 创建点击切换处理函数
+     * 点击后根据 task.id 找到对应任务，切换 done 状态
+     */
+    function createToggleHandler(taskId) {
+        return function () {
+            // 找到对应任务
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].id === taskId) {
+                    // 切换完成状态
+                    tasks[i].done = !tasks[i].done;
+                    break;
+                }
+            }
+            // 重新渲染
+            renderTasks();
+            updateStats();
+        };
     }
 
     /**
@@ -47,23 +76,27 @@
      */
     function updateStats() {
         totalCountEl.textContent = tasks.length;
-        // 已完成数量暂保持 0
-        doneCountEl.textContent = 0;
+
+        // 统计已完成任务数量
+        var doneCount = 0;
+        for (var i = 0; i < tasks.length; i++) {
+            if (tasks[i].done) {
+                doneCount += 1;
+            }
+        }
+        doneCountEl.textContent = doneCount;
     }
 
     /**
      * 添加新任务
      */
     function addTask() {
-        // 获取输入内容并去除首尾空格
         var text = taskInput.value.trim();
 
-        // 空内容不添加
         if (text === "") {
             return;
         }
 
-        // 创建任务对象并加入数组
         var task = {
             id: Date.now(),
             text: text,
@@ -71,18 +104,14 @@
         };
         tasks.push(task);
 
-        // 更新页面
         renderTasks();
         updateStats();
-
-        // 清空输入框
         taskInput.value = "";
     }
 
     // 绑定事件
     btnAdd.addEventListener("click", addTask);
 
-    // 支持回车键添加任务
     taskInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             addTask();
